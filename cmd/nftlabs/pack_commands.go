@@ -1,19 +1,20 @@
 package main
 
 import (
-	"github.com/nftlabs/nftlabs-sdk-go/pkg/nftlabs"
-	"github.com/spf13/cobra"
 	"log"
 	"math/big"
 	"strconv"
+
+	"github.com/montanaflynn/go-sdk/pkg/nftlabs"
+	"github.com/spf13/cobra"
 )
 
 const (
-	assetContractFlag = "assetContract"
+	assetContractFlag         = "assetContract"
 	secondsUntilOpenStartFlag = "secondsUntilOpenStart"
-	secondsUntilOpenEndFlag = "secondsUntilOpenEnd"
-	rewardsPerOpenFlag = "rewardsPerOpen"
-	assetSuppliesFlag = "assetSupplies"
+	secondsUntilOpenEndFlag   = "secondsUntilOpenEnd"
+	rewardsPerOpenFlag        = "rewardsPerOpen"
+	assetSuppliesFlag         = "assetSupplies"
 	//nftMetadataFlag = "description"
 	//imageFlag = "image"
 	//externalUrlFlag = "externalUrl"
@@ -23,22 +24,22 @@ const (
 )
 
 var (
-	packContractAddress string
-	createPackArgs nftlabs.CreatePackArgs
+	packContractAddress   string
+	createPackArgs        nftlabs.CreatePackArgs
 	secondsUntilOpenStart int64
-	secondsUntilOpenEnd int64
-	rewardsPerOpen int64
-	assetPairs map[string]int64
+	secondsUntilOpenEnd   int64
+	rewardsPerOpen        int64
+	assetPairs            map[string]int64
 )
 
 var packCmd = &cobra.Command{
 	Use:   "pack [command]",
 	Short: "Interact with a pack contract",
-	Args: cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 }
 
-var packGetAllCmd = &cobra.Command {
-	Use: "getAll [tokenId]",
+var packGetAllCmd = &cobra.Command{
+	Use:   "getAll [tokenId]",
 	Short: "Get all available packs in a contract `ADDRESS`",
 	Run: func(cmd *cobra.Command, args []string) {
 		module, err := getPackModule()
@@ -57,15 +58,14 @@ var packGetAllCmd = &cobra.Command {
 	},
 }
 
-var packCreateCmd = &cobra.Command {
-	Use: "create",
+var packCreateCmd = &cobra.Command{
+	Use:   "create",
 	Short: "Create a new pack",
 	Run: func(cmd *cobra.Command, args []string) {
 		module, err := getPackModule()
 		if err != nil {
 			panic(err)
 		}
-
 
 		assets := make([]nftlabs.PackAssetAddition, len(assetPairs))
 		cnt := 0
@@ -76,7 +76,7 @@ var packCreateCmd = &cobra.Command {
 				panic(err)
 			}
 			assets[cnt] = nftlabs.PackAssetAddition{
-				NftId: big.NewInt(tokenIdParse),
+				NftId:  big.NewInt(tokenIdParse),
 				Supply: big.NewInt(quantity),
 			}
 			cnt += 1

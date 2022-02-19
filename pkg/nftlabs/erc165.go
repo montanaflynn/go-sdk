@@ -3,10 +3,11 @@ package nftlabs
 import (
 	"context"
 	"crypto/ecdsa"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/nftlabs/nftlabs-sdk-go/internal/abi"
+	"github.com/montanaflynn/go-sdk/internal/abi"
 )
 
 type erc165 interface {

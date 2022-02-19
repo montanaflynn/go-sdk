@@ -3,19 +3,20 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/nftlabs/nftlabs-sdk-go/pkg/nftlabs"
-	"github.com/spf13/cobra"
 	"math/big"
+
+	"github.com/montanaflynn/go-sdk/pkg/nftlabs"
+	"github.com/spf13/cobra"
 )
 
 const (
-	newListingAssetContractAddressFlag = "assetAddress"
+	newListingAssetContractAddressFlag    = "assetAddress"
 	newListingCurrencyContractAddressFlag = "currencyAddress"
 )
 
 var (
 	marketplaceContractAddress string
-	newMarketplaceListing nftlabs.NewListingArgs
+	newMarketplaceListing      nftlabs.NewListingArgs
 )
 
 var marketplaceCmd = &cobra.Command{
@@ -24,7 +25,7 @@ var marketplaceCmd = &cobra.Command{
 }
 
 var marketplaceGetAllCmd = &cobra.Command{
-	Use: "getAll",
+	Use:   "getAll",
 	Short: "Gets all listings in a marketplace",
 	Run: func(cmd *cobra.Command, args []string) {
 		module, err := getMarketplaceModule()
@@ -45,9 +46,9 @@ var marketplaceGetAllCmd = &cobra.Command{
 }
 
 var marketplaceGetCmd = &cobra.Command{
-	Use: "get [listingId]",
-	Short: "Gets listing [listingId] from marketplace",
-	Args: cobra.ExactArgs(1),
+	Use:       "get [listingId]",
+	Short:     "Gets listing [listingId] from marketplace",
+	Args:      cobra.ExactArgs(1),
 	ValidArgs: []string{"listingId"},
 	Run: func(cmd *cobra.Command, args []string) {
 		listingId := big.NewInt(0)
@@ -74,9 +75,9 @@ var marketplaceGetCmd = &cobra.Command{
 }
 
 var marketplaceListCmd = &cobra.Command{
-	Use: "list [tokenId] [quantity] [price] [tokensPerBuyer] [secondsUntilOpenStart] [secondsUntilOpenEnd]",
+	Use:   "list [tokenId] [quantity] [price] [tokensPerBuyer] [secondsUntilOpenStart] [secondsUntilOpenEnd]",
 	Short: "Lists an asset in the marketplace",
-	Args: cobra.ExactArgs(6),
+	Args:  cobra.ExactArgs(6),
 	ValidArgs: []string{
 		"tokenId",
 		"quantity",

@@ -13,7 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/nftlabs/nftlabs-sdk-go/internal/abi"
+	"github.com/montanaflynn/go-sdk/internal/abi"
 )
 
 type Market interface {
@@ -45,7 +45,7 @@ func newMarketModule(client *ethclient.Client, address string, main ISdk) (*Mark
 		Client:  client,
 		Address: address,
 		module:  module,
-		main: main,
+		main:    main,
 	}, nil
 }
 
@@ -341,7 +341,7 @@ func (sdk *MarketModule) transformResultToListing(listing abi.MarketListing) (Li
 	}
 
 	var saleEnd *time.Time
-	if listing.SaleEnd.Int64() > 0 && listing.SaleEnd.Int64() < math.MaxInt64 - 1 {
+	if listing.SaleEnd.Int64() > 0 && listing.SaleEnd.Int64() < math.MaxInt64-1 {
 		time.Unix(listing.SaleEnd.Int64()*1000, 0)
 	} else {
 		saleEnd = nil
@@ -361,4 +361,3 @@ func (sdk *MarketModule) transformResultToListing(listing abi.MarketListing) (Li
 		SaleEnd:          saleEnd,
 	}, nil
 }
-

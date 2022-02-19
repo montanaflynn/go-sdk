@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/nftlabs/nftlabs-sdk-go/pkg/nftlabs"
+	"github.com/montanaflynn/go-sdk/pkg/nftlabs"
 	"log"
 )
 
@@ -101,4 +101,3 @@ func getCurrencyModule() (nftlabs.Currency, error) {
 		return caller, nil
 	}
 }
-

@@ -4,16 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/ethereum/go-ethereum/core/types"
-	"golang.org/x/sync/errgroup"
 	"log"
 	"math/big"
 	"sync"
 
+	"github.com/ethereum/go-ethereum/core/types"
+	"golang.org/x/sync/errgroup"
+
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/nftlabs/nftlabs-sdk-go/internal/abi"
+	"github.com/montanaflynn/go-sdk/internal/abi"
 )
 
 type Nft interface {
@@ -46,15 +47,15 @@ type NftModule struct {
 	Options *SdkOptions
 	module  *abi.NFT
 
-	oldModule  *abi.OldNFT
+	oldModule *abi.OldNFT
 
 	shouldCheckVersion bool
-	isOldModule bool
+	isOldModule        bool
 
 	main ISdk
 }
 
-func (sdk *NftModule) v1MintBatch(meta []MintNftMetadata) ([] NftMetadata, error) {
+func (sdk *NftModule) v1MintBatch(meta []MintNftMetadata) ([]NftMetadata, error) {
 	if sdk.main.getSignerAddress() == common.HexToAddress("0") {
 		return nil, &NoSignerError{typeName: "nft"}
 	}
@@ -201,7 +202,6 @@ func (sdk *NftModule) MintBatchTo(to string, meta []MintNftMetadata) ([]NftMetad
 	}
 }
 
-
 func (sdk *NftModule) Burn(tokenId *big.Int) error {
 	if sdk.main.getSignerAddress() == common.HexToAddress("0") {
 		return &NoSignerError{
@@ -235,7 +235,6 @@ func (sdk *NftModule) SetRoyaltyBps(amount *big.Int) error {
 		return waitForTx(sdk.Client, tx.Hash(), txWaitTimeBetweenAttempts, txMaxAttempts)
 	}
 }
-
 
 func (sdk *NftModule) v1MintTo(to string, metadata MintNftMetadata) (NftMetadata, error) {
 	if sdk.main.getSignerAddress() == common.HexToAddress("0") {
@@ -276,7 +275,7 @@ func (sdk *NftModule) v1MintTo(to string, metadata MintNftMetadata) (NftMetadata
 		Image:       metadata.Image,
 		Description: metadata.Description,
 		Name:        metadata.Name,
-		Properties: metadata.Properties,
+		Properties:  metadata.Properties,
 	}, err
 }
 
@@ -323,7 +322,7 @@ func (sdk *NftModule) MintTo(to string, metadata MintNftMetadata) (NftMetadata, 
 		Image:       metadata.Image,
 		Description: metadata.Description,
 		Name:        metadata.Name,
-		Properties: metadata.Properties,
+		Properties:  metadata.Properties,
 	}, err
 }
 
@@ -420,12 +419,12 @@ func newNftModule(client *ethclient.Client, address string, main ISdk) (Nft, err
 	}
 
 	return &NftModule{
-		Client:  client,
-		Address: address,
-		module:  module,
-		main: main,
-		oldModule: oldModule,
-		isOldModule: false,
+		Client:             client,
+		Address:            address,
+		module:             module,
+		main:               main,
+		oldModule:          oldModule,
+		isOldModule:        false,
 		shouldCheckVersion: true,
 	}, nil
 }
